@@ -1,0 +1,37 @@
+﻿
+
+<h3>User list</h3>
+
+<div class="list-group">
+    @foreach (var user in ViewBag.UsersList)
+    {
+        <div class="list-group-item">
+            <div class="panel-heading">Username: @user.UserName</div>
+
+            <div class="panel-body">
+                <i class="glyphicon glyphicon-envelope"></i> User's Email address: <span class="label label-default">@user.Email</span>
+                <br /><br />
+
+                @if (user.PhoneNumber != null)
+                {
+                    <i class="glyphicon glyphicon-phone"></i> @: User's Phone Number:
+                    <span class="label label-default"> @user.PhoneNumber </span>
+                }
+
+            </div>
+
+            <div>
+                @*
+                <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id">
+                    Edit User
+                </a>
+                *@
+                <a class="btn btn-sm btn-success" style="background-color: #22223B" href=" /Users/Show/@user.Id">
+                    Show User
+                </a>
+            </div>
+
+            <br /><br />
+        </div>
+    }
+</div>

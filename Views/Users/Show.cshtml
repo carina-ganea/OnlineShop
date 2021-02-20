@@ -1,0 +1,44 @@
+﻿@model Proiect.Models.ApplicationUser
+
+
+
+
+<h3>User information</h3>
+
+
+<div class="panel-heading">Username: @Model.UserName</div>
+
+<div class="panel-body">
+
+    <i class="glyphicon glyphicon-envelope"></i> User's email address: <span class="label label-default">@Model.Email</span>
+    <br />
+    <i class="glyphicon glyphicon-th-list"></i> User's Role: @ViewBag.roleName
+
+    <br /><br />
+
+    @if (@Model.PhoneNumber != null)
+    {
+        <i class="glyphicon glyphicon-phone"></i>@:User's phone number:
+        <span class="label label-default">@Model.PhoneNumber</span>
+    }
+
+</div>
+
+<div class="panel-footer" style="display: flex; justify-content: center">
+
+    <a class="btn btn-success" href="/Users/Edit/@Model.Id">
+        Edit User
+    </a>
+
+    @if ((string)Model.Id != ViewBag.utilizatorCurent)
+    {
+        <form method="post" action="/Users/Delete/@Model.Id">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-danger" type="submit">Delete User</button>
+        </form>
+
+    }
+
+
+</div>
+

@@ -1,0 +1,151 @@
+﻿@model Proiect.Models.Product
+
+<br />
+<h4>@ViewBag.message</h4>
+
+<br />
+@*<a href="/Categories/Index" class="btn btn-primary"> <i class="glyphicon glyphicon-arrow-left"></i>Intoarce-te la categories</a>
+
+
+    <div class="panel">
+        <div class="panel panel-heading"><h2>@Model.ProductName</h2></div>
+        <div class="panel panel-body">
+            <h3>@Model.Price lei</h3>
+            <br />
+            <strong>@Model.Description</strong>
+        </div>
+    </div>
+*@
+
+
+<div class="container col-md-6">
+    <div class="btn-group" style="display: flex; justify-content: center" role="group">
+        @if (ViewBag.isAdmin == true && ViewBag.IsAccepted == false)
+        {
+
+            <form method="post" action="/Products/AcceptProduct/@Model.IdProduct">
+                @Html.HttpMethodOverride(HttpVerbs.Put)
+                <button class="btn btn-primary" style="background-color: #22223B" type="submit">Accept product</button>
+            </form>
+
+            <form method="post" action="/Products/Delete/@Model.IdProduct">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-primary" style="background-color: #22223B" type="submit">Reject product</button>
+            </form>
+        }
+    </div>
+    <br />
+    @Html.Partial("ProductInfo", Model)
+    <br />
+    <div class="btn-group" style="display: flex; justify-content: center" role="group">
+
+        @if (ViewBag.isAdmin == true || (ViewBag.isColaborator == true && ViewBag.currentUser == Model.UserId))
+        {
+            
+            <a href="/Products/Edit/@Model.IdProduct" class="btn btn-success">Edit product</a>
+
+            <form method="post" action="/Products/Delete/@Model.IdProduct">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-danger" type="submit">Delete product</button>
+            </form>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="container col-md-6">
+    <div class="list-group">
+        <br />
+        <div class="panel" style="padding: 10px">
+
+            <form method="post" action="/Products/AddToCart/@Model.IdProduct">
+                @Html.Label("amount", "Amount")
+                @Html.Editor("amount")
+                <button class="btn btn-success" type="submit">Add to Cart</button>
+            </form>
+
+        </div>
+        <br />
+        @foreach (var review in ViewBag.Reviews)
+        {
+            <div class="list-group list-group-item" style="padding: 10px">
+                    <br />
+                    @foreach (var user in ViewBag.Users)
+                    {
+
+                        if (user.Value == review.UserId)
+                        {
+                            <div class="glyphicon glyphicon-user">@user.Text</div>
+                        }
+                    }
+
+                <br />
+                    <p>@review.Content</p>
+                <br />
+
+                    @if (ViewBag.currentUser == review.UserId)
+                    {
+                        <div style="display: inline-block; float : left; margin-right: 15px">
+                            <a class="glyphicon glyphicon-pencil" href="/Reviews/Edit/@review.IdReview"></a>
+                        </div>
+
+                    }
+
+                    @if (ViewBag.isAdmin == true || ViewBag.currentUser == review.UserId)
+                    {
+                        <div style="display: inline-block; float : left">
+                            <form method="post" action="/Reviews/Delete/@review.IdReview">
+                                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                            </form>
+                        </div>
+                    }
+                    <br />
+            </div>
+        }
+
+
+        <p style="background-color:transparent; color:firebrick">@ViewBag.errorMessage</p>
+
+        <div>
+            <form method="post" action="/Products/Rate">
+                <div class="custom-control custom-radio custom-control-inline">
+                    1<i class="glyphicon glyphicon-star"></i>
+                    <input name="Mark" type="radio" class="custom-control-input" value="1" />
+                    <input name="Mark" type="radio" class="custom-control-input" value="2" />
+                    <input name="Mark" type="radio" class="custom-control-input" value="3" />
+                    <input name="Mark" type="radio" class="custom-control-input" value="4" />
+                    <input name="Mark" type="radio" class="custom-control-input" value="5" />
+                    5<i class="glyphicon glyphicon-star"></i>
+                    <input type="hidden" name="ProductId" value="@Model.IdProduct" />
+                    <button class="btn btn-primary" style="background-color: #22223B" type="submit">Rate Product</button>
+                </div>
+            </form>
+        </div>
+        @if (TempData.ContainsKey("AlreadyRated"))
+        {
+            <p class="text-danger">@TempData["AlreadyRated"]</p>
+        }
+        <div>
+            <form method="post" action="/Reviews/New">
+                <div class="panel-body">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <input type="hidden" name="IdProduct" value="@Model.IdProduct" />
+                    <label>Content review</label>
+                    <br />
+                    <textarea class="form-control" name="Content" value="@ViewBag.review.Content"></textarea>
+                    <br />
+                    <button class="btn btn-primary" style="background-color: #22223B" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+   
+<br />

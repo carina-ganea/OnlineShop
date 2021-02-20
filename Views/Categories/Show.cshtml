@@ -1,0 +1,32 @@
+﻿@model Proiect.Models.Category
+
+<h2>@Model.CategoryName</h2>
+<br />
+<div style="display:flex; justify-content:flex-start">
+    @if (ViewBag.isAdmin == true)
+    {
+        <a class="btn btn-success" href="/Categories/Edit/@Model.IdCategory">Edit category</a>
+
+        <form method="post" action="/Categories/Delete/@Model.IdCategory">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-danger" type="submit">Delete category</button>
+        </form>
+    }
+</div>
+
+<br />
+<br />
+<div class="list-group list-group-horizontal">
+    @foreach (var product in ViewBag.Products)
+    { 
+        <a href="/Products/Show/@product.IdProduct" class="list-group-item">
+            <div style="display:flex; justify-content:space-between">
+                <div>
+                    <h3>@product.ProductName</h3>
+                    <p>@product.Price lei</p>
+                </div>
+                <img src="~/Files/@product.FileName" alt="@product.FileName" height="200px" />
+            </div>
+        </a>
+    }
+</div>

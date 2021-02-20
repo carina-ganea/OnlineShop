@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body style="background-color: #F2E9E4">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #22223B; border-color: #F2E9E4; position:center">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Online Shop", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse" style="display:flex">
+                <ul class="nav navbar-nav">
+
+                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+
+                    @if (User.IsInRole("Colaborator") || User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Add Product", "New", "Products")</li>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Add Category", "New", "Categories")</li>
+                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                    }
+
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Colaborator") || User.IsInRole("User")))
+                    {
+                        <li>@Html.ActionLink("Cart", "Index", "Carts")</li>
+                    }
+
+                    <li style="padding-top: 10px; padding-bottom:10px">
+                        @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { enctype = "multipart/form-data" }))
+                        {
+                            <div style="display:flex; justify-content:left">
+                                <input class="form-control " type="text" name="search" value="@ViewBag.SearchString" placeholder="Browse items">
+                                <button class="btn btn-toolbar" type="submit">Search</button>
+                            </div>
+                        }
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding:15px; align-self:flex-end">
+        <footer class="footer_pagina">
+            @RenderBody()
+            <hr />
+            <p id="footer_text" style="padding:15px; text-align:end; text-anchor:end;">
+            &copy; @DateTime.Now.Year - Carina Ganea & Andrei Calin's Online Shop
+            </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

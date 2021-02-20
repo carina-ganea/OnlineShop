@@ -1,0 +1,18 @@
+﻿
+
+@model Proiect.Models.Category
+
+<h2>Add a new category</h2>
+
+<form method="post" action="/Categories/New">
+
+    @Html.Label("CategoryName", "Category name")
+    <br />
+
+    @Html.TextBox("CategoryName", null, new { @class = "form-control" })
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Add category</button>
+</form>
+
+

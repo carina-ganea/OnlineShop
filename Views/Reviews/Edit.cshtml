@@ -1,0 +1,23 @@
+﻿
+@model Proiect.Models.Review
+
+<h2>Edit review</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Reviews"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.IdReview)
+
+    @Html.Label("Content", "Content review")
+
+    <br />
+    @Html.TextAreaFor(m => m.Content)
+    @Html.ValidationMessageFor(m => m.Content, null, new { @class="text-danger"})
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Editeaza review-ul</button>
+}
+    
+
+

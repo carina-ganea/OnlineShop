@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+<h2>Categories</h2>
+
+<br />
+<h3 class="text-success">@ViewBag.message</h3>
+
+<br />
+
+<div class="list-group">
+    @foreach ( var category in ViewBag.Categories)
+    {
+        <a class="list-group-item list-group-item-action" href="/Categories/Show/@category.IdCategory">
+            <h3>@category.CategoryName</h3>
+        </a>  
+    }
+</div>
+
+
+

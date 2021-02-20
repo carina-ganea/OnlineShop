@@ -1,0 +1,29 @@
+﻿@model Proiect.Models.Cart
+@{
+    ViewBag.Title = "Show Cart";
+}
+
+<h2>@ViewBag.Title</h2>
+<h3 style="text-align: right"> Amount </h3>
+<br />
+<div class="list-group">
+    @foreach (var elem in ViewBag.Elements)
+    {
+        <div class="list-group list-group-item" style="padding:20px">
+           
+                <h3>@elem.Product.ProductName</h3>
+                <h4 class="glyphicon glyphicon-tag">@elem.Product.Price</h4>
+                <h4 class="pull-right">@elem.Amount</h4>
+
+
+                <form method="post" action="/Carts/Delete/@elem.IdProduct">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                </form>
+                <br />
+                <br />
+        </div>
+    }
+</div>
+<br />
+<h3 style="text-align: right">Total = @ViewBag.TotalPrice</h3>

@@ -1,0 +1,44 @@
+﻿
+<div class="list-group list-group-item">
+    <img src="~/Files/@Model.FileName" alt="@Model.FileName" height="250px" />
+
+
+
+    <span class="panel-title">
+        <div class="panel-heading article-heading">
+            <span class="font-roboto article-title" >
+                <h2 style="float:left; margin-right:20px">@Model.ProductName</h2>
+              
+                <h4 class="glyphicon glyphicon-tag" style="float:center; margin-left:20px; margin-top:30px">@Model.Price lei</h4>
+            </span>
+            
+        </div>
+    </span>
+
+    <div class="panel-body" style="margin-top:20px">
+        @*<span class="article-content-title">Product Description</span>*@
+        <br />
+        <div class="article-content-wrapper">
+            <h5>@Html.Raw(Model.Description)</h5>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <span class="font-roboto">Product Rating: @ViewBag.Rating</span>
+        <i class="glyphicon glyphicon-star"></i>
+    </div>
+
+    <div class="article-meta">
+        <div>
+            <i class="glyphicon glyphicon-bookmark"></i>
+            @Model.Category.CategoryName
+        </div>
+
+        
+
+        <div>
+            <i class="glyphicon glyphicon-user"></i>
+            <strong> @Model.User.Email </strong>
+        </div>
+    </div>
+</div>

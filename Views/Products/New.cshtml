@@ -1,0 +1,57 @@
+﻿
+
+@model Proiect.Models.Product
+
+
+<h2>New product</h2>
+
+<br />
+
+@using (Html.BeginForm("New", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.IdProduct)
+
+    @Html.Label("ProductName", "The name of the product")
+    <br />
+    @Html.TextBoxFor(m => m.ProductName)
+    @Html.ValidationMessageFor(model => model.ProductName, null, new { @class = "text-danger " })
+    <br />
+    <br />
+
+    <label>Select an image file</label>
+    <input type="file" name="Image" />
+    if (TempData.ContainsKey("BadFileExtension"))
+    {
+        <p class="text-danger">@TempData["BadFileExtension"]</p>
+    }
+    @Html.ValidationMessageFor(model => model.Image, null, new { @class = "text-danger " })
+    <br />
+    <br />
+    //<img src="/Files/@file.FileName"/>
+    @Html.Label("Price", "The price of the product")
+    <br />
+    @Html.TextBoxFor(m => m.Price)
+    @Html.ValidationMessageFor(m => m.Price, null, new { @class = "text-danger " })
+    <br />
+    <br />
+
+    <label>Category</label>
+    <br />
+    @Html.DropDownListFor(model => model.IdCategory, new SelectList(Model.Categories, "Value", "Text"),
+    "Select category", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.IdCategory, null, new { @class = "text-danger " })
+    <br />
+    <br />
+
+    @Html.Label("Description", "Product description")
+    <br />
+    @Html.TextAreaFor(m => m.Description)
+    <br />
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Add product</button>
+}
+
+
